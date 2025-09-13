@@ -13,4 +13,6 @@ export const auth = betterAuth({
     enabled: true,
   },
   plugins: [nextCookies()],
+
+  secret: process.env.AUTH_SECRET,
 });

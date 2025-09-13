@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "~/components/ui/button";
 
 export default function Home() {
@@ -5,7 +6,9 @@ export default function Home() {
     <main>
       <div>Hello world!</div>
 
-      <Button>Click Me!</Button>
+      <Button asChild>
+        <Link href="/sign-in">Try Now</Link>
+      </Button>
     </main>
   );
 }
