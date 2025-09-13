@@ -1,5 +1,6 @@
 import { initTRPC } from "@trpc/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+import { createTRPCContext } from "~/configs/trpc";
 import { appRouter } from "~/server/router";
 
 const t = initTRPC.create();
@@ -11,6 +12,7 @@ function handler(req: Request) {
     endpoint: "/api/trpc",
     req,
     router: appRouter,
+    createContext: createTRPCContext,
   });
 }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "~/components/ui/button";
-import { signUp } from "~/lib/auth-client";
+import { signUp } from "~/lib/auth/client";
 
 export default function Page() {
   return (

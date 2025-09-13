@@ -1,33 +1,16 @@
 import { headers } from "next/headers";
 import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
-import { authorization } from "~/configs/authorization";
-import { auth } from "~/lib/auth";
+import { auth, checkPathAuthorization } from "~/lib/auth";
 
 export async function middleware(request: NextRequest) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
-  const hasSession = !!session;
+  const authResult = checkPathAuthorization(request, !!session);
 
-  const accessingMustPublic = authorization.mustPublic.some((path) =>
-    request.nextUrl.pathname.match(new RegExp(`^${path}$`))
-  );
-
-  const accessingMustPrivate = authorization.mustPrivate.some((path) =>
-    request.nextUrl.pathname.match(new RegExp(`^${path}$`))
-  );
-
-  if (hasSession && accessingMustPublic) {
-    return NextResponse.redirect(
-      new URL(authorization.paths.dashboard, request.url)
-    );
-  }
-
-  if (!hasSession && accessingMustPrivate) {
-    return NextResponse.redirect(
-      new URL(authorization.paths.signIn, request.url)
-    );
+  if (authResult.shouldRedirect && authResult.redirectTo) {
+    return NextResponse.redirect(new URL(authResult.redirectTo, request.url));
   }
 
   return NextResponse.next();

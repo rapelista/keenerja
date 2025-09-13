@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { Button } from "~/components/ui/button";
-import { signOut } from "~/lib/auth-client";
+import { signOut } from "~/lib/auth/client";
 import { trpc } from "~/lib/trpc";
 
 export default function Page() {
