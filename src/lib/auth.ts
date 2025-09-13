@@ -9,9 +9,11 @@ export const auth = betterAuth({
     provider: "pg",
     schema,
   }),
+
   emailAndPassword: {
     enabled: true,
   },
+
   plugins: [nextCookies()],
 
   secret: process.env.AUTH_SECRET,
