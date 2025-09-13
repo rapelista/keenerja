@@ -90,3 +90,5 @@ export const user = pgTable(
   },
   (table) => [unique("user_email_key").on(table.email)]
 );
+
+export const schema = { session, account, verification, user };
