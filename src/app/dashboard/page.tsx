@@ -8,7 +8,7 @@ import { trpc } from "~/lib/trpc";
 
 export default function Page() {
   const router = useRouter();
-  const { data } = useQuery(trpc.greeting.queryOptions());
+  const { data } = useQuery(trpc.user.queryOptions());
 
   return (
     <div>
