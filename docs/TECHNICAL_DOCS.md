@@ -1,8 +1,8 @@
-# FLOWN Technical Documentation
+# KEENERJA Technical Documentation
 
 ## Tech Stack Overview
 
-FLOWN is built as a full-stack application using modern web technologies to support user management, workflows, and approvals.
+KEENERJA is built as a full-stack application using modern web technologies to support user management, workflows, and approvals.
 
 ### Chosen Technologies
 
@@ -22,4 +22,4 @@ FLOWN is built as a full-stack application using modern web technologies to supp
 - **Prisma**: Ensures type safety and ease of use for database operations, reducing errors in development.
 - **Turborepo**: Enhances efficiency in a monorepo setup by optimizing builds and task execution, ideal for future scaling.
 
-This updated stack emphasizes simplicity and edge computing for FLOWN's user-centric features.
+This updated stack emphasizes simplicity and edge computing for KEENERJA's user-centric features.

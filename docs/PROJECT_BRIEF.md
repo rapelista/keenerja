@@ -1,6 +1,6 @@
-# FLOWN: Enhanced Approval Workflow System
+# KEENERJA: Enhanced Approval Workflow System
 
-FLOWN is designed to streamline and simplify the approval workflow processes within organizations, making it easier for teams to manage, execute, and track workflows efficiently. The system focuses on user-centric management, customizable workflows, and flexible approval mechanisms to adapt to various business needs.
+KEENERJA is designed to streamline and simplify the approval workflow processes within organizations, making it easier for teams to manage, execute, and track workflows efficiently. The system focuses on user-centric management, customizable workflows, and flexible approval mechanisms to adapt to various business needs.
 
 ## Key Features
 
@@ -35,7 +35,7 @@ The approval system provides robust, condition-based decision-making for workflo
 
 ### User Structure
 
-In FLOWN, a **User** represents an individual interacting with the system. Each user can belong to multiple organizations, allowing flexibility for users working across departments or companies. Within each organization, a user holds exactly one role, preventing conflicts and ensuring clear responsibilities.
+In KEENERJA, a **User** represents an individual interacting with the system. Each user can belong to multiple organizations, allowing flexibility for users working across departments or companies. Within each organization, a user holds exactly one role, preventing conflicts and ensuring clear responsibilities.
 
 ### User Roles and Permissions
 
@@ -43,7 +43,7 @@ Users are categorized into three primary roles, each with distinct capabilities:
 
 1. **Owner**
 
-   - **Primary Function**: The foundational user who initiates the organization's presence in FLOWN.
+   - **Primary Function**: The foundational user who initiates the organization's presence in KEENERJA.
    - **Capabilities**:
      - Registers the organization and becomes its default administrator.
      - Can create additional organizations under their account.
@@ -69,4 +69,4 @@ Users are categorized into three primary roles, each with distinct capabilities:
      - Views their workflow history and status.
    - **Use Case**: Typically employees or stakeholders who are the primary actors in day-to-day operations, such as submitting expense reports or requesting approvals.
 
-This structure ensures a balanced distribution of responsibilities, promoting efficiency and security within the approval workflow ecosystem. FLOWN aims to reduce friction in organizational processes, enabling faster decision-making and better collaboration. For implementation details or further customization, refer to the development documentation.
+This structure ensures a balanced distribution of responsibilities, promoting efficiency and security within the approval workflow ecosystem. KEENERJA aims to reduce friction in organizational processes, enabling faster decision-making and better collaboration. For implementation details or further customization, refer to the development documentation.
