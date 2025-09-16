@@ -1,16 +1,16 @@
-import { TRPCError } from "@trpc/server";
-import { eq } from "drizzle-orm";
-import { z } from "zod";
-import { protectedProcedure, publicProcedure, router } from "~/configs/trpc";
-import { db } from "~/db/drizzle";
-import { user } from "~/db/schema";
+import { TRPCError } from '@trpc/server';
+import { eq } from 'drizzle-orm';
+import { z } from 'zod';
+import { protectedProcedure, publicProcedure, router } from '~/configs/trpc';
+import { db } from '~/db/drizzle';
+import { user } from '~/db/schema';
 
 export const appRouter = router({
   // Public procedures
-  greeting: publicProcedure.query(() => "hello tRPC v10!"),
+  greeting: publicProcedure.query(() => 'hello tRPC v10!'),
 
   // Protected procedures that require authentication
-  user: protectedProcedure.query(async () => {
+  users: protectedProcedure.query(async () => {
     const users = await db.select().from(user).limit(10);
 
     return {
@@ -26,7 +26,7 @@ export const appRouter = router({
       .limit(1);
 
     if (!currentUser.length) {
-      throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' });
     }
 
     return {
@@ -37,8 +37,8 @@ export const appRouter = router({
   updateProfile: protectedProcedure
     .input(
       z.object({
-        name: z.string().min(1, "Name is required"),
-      })
+        name: z.string().min(1, 'Name is required'),
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const updatedUser = await db

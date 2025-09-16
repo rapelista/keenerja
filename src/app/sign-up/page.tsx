@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Button } from "~/components/ui/button";
-import { signUp } from "~/lib/auth/client";
+import { Button } from '~/components/ui/button';
+import { signUp } from '~/lib/auth/client';
 
 export default function Page() {
   return (
@@ -11,14 +11,14 @@ export default function Page() {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          alert("Registered!");
+          alert('Registered!');
 
           const randomNumber = new Date().getTime();
 
           const result = await signUp.email({
             email: `user-${randomNumber}@gvstang.com`,
             name: `User ${randomNumber}`,
-            password: "user@123",
+            password: 'user@123',
           });
 
           console.log(result);

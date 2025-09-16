@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Button } from "~/components/ui/button";
-import { signIn } from "~/lib/auth/client";
+import { Button } from '~/components/ui/button';
+import { signIn } from '~/lib/auth/client';
 
 export default function Page() {
   return (
@@ -11,9 +11,9 @@ export default function Page() {
         onSubmit={(e) => {
           e.preventDefault();
           signIn.email({
-            email: "user-1757784457625@gvstang.com",
-            password: "user@123",
-            callbackURL: "/dashboard",
+            email: 'user-1757784457625@gvstang.com',
+            password: 'user@123',
+            callbackURL: '/dashboard',
           });
         }}
       >

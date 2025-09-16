@@ -1,7 +1,7 @@
 /* Import dependencies */
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "./variables.css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import './variables.css';
 
 /* Base styles */
 @layer base {
@@ -11,12 +11,9 @@
 
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-  }
-
-  /* Smooth scrolling */
-  html {
-    scroll-behavior: smooth;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
   }
 
   /* Focus styles */

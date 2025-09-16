@@ -1,7 +1,7 @@
-import { Providers } from "~/components/providers";
-import "~/styles/globals.css";
+import { Providers } from '~/components/providers';
+import '~/styles/globals.css';
 
-export { metadata } from "~/configs/metadata";
+export { metadata } from '~/configs/metadata';
 
 export default function RootLayout({
   children,

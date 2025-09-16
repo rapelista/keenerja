@@ -1,15 +1,15 @@
 export const authorization = {
-  mustPublic: ["/sign-in", "/sign-up"],
+  mustPublic: ['/sign-in', '/sign-up'],
 
-  mustPrivate: ["/dashboard"],
+  mustPrivate: ['/dashboard'],
 
   paths: {
-    signIn: "/sign-in",
+    signIn: '/sign-in',
 
-    signUp: "/sign-up",
+    signUp: '/sign-up',
 
-    signOut: "/sign-out",
+    signOut: '/sign-out',
 
-    dashboard: "/dashboard",
+    dashboard: '/dashboard',
   },
 };

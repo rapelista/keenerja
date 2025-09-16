@@ -4,8 +4,8 @@ export {
   isProtectedPath,
   isPublicOnlyPath,
   type AuthorizationResult,
-} from "./authorization";
+} from './authorization';
 
-export { auth } from "./config";
+export { auth } from './config';
 
-export { signIn, signOut, signUp } from "./client";
+export { signIn, signOut, signUp } from './client';

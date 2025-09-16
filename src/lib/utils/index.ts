@@ -1,5 +1,5 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 /**
  * Utility function to merge Tailwind CSS classes with clsx
@@ -13,10 +13,10 @@ export function cn(...inputs: ClassValue[]) {
  * Utility function to format dates consistently
  */
 export function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat("id-ID", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+  return new Intl.DateTimeFormat('id-ID', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   }).format(date);
 }
 
@@ -32,5 +32,5 @@ export function capitalize(str: string): string {
  */
 export function truncate(text: string, length: number): string {
   if (text.length <= length) return text;
-  return text.slice(0, length) + "...";
+  return text.slice(0, length) + '...';
 }

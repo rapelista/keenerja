@@ -1,5 +1,5 @@
-import { NextRequest } from "next/server";
-import { authorization } from "~/configs/authorization";
+import { NextRequest } from 'next/server';
+import { authorization } from '~/configs/authorization';
 
 export interface AuthorizationResult {
   hasSession: boolean;
@@ -12,16 +12,16 @@ export interface AuthorizationResult {
  */
 export function checkPathAuthorization(
   request: NextRequest,
-  hasSession: boolean
+  hasSession: boolean,
 ): AuthorizationResult {
   const pathname = request.nextUrl.pathname;
 
   const accessingMustPublic = authorization.mustPublic.some((path) =>
-    pathname.match(new RegExp(`^${path}$`))
+    pathname.match(new RegExp(`^${path}$`)),
   );
 
   const accessingMustPrivate = authorization.mustPrivate.some((path) =>
-    pathname.match(new RegExp(`^${path}$`))
+    pathname.match(new RegExp(`^${path}$`)),
   );
 
   // User is authenticated but accessing public-only route
@@ -53,7 +53,7 @@ export function checkPathAuthorization(
  */
 export function isProtectedPath(pathname: string): boolean {
   return authorization.mustPrivate.some((path) =>
-    pathname.match(new RegExp(`^${path}$`))
+    pathname.match(new RegExp(`^${path}$`)),
   );
 }
 
@@ -62,6 +62,6 @@ export function isProtectedPath(pathname: string): boolean {
  */
 export function isPublicOnlyPath(pathname: string): boolean {
   return authorization.mustPublic.some((path) =>
-    pathname.match(new RegExp(`^${path}$`))
+    pathname.match(new RegExp(`^${path}$`)),
   );
 }

@@ -1,8 +1,8 @@
-import { initTRPC, TRPCError } from "@trpc/server";
+import { initTRPC, TRPCError } from '@trpc/server';
 
-import { headers } from "next/headers";
-import { auth } from "~/lib/auth";
-import { Session } from "~/lib/auth/config";
+import { headers } from 'next/headers';
+import { auth } from '~/lib/auth';
+import { Session } from '~/lib/auth/config';
 
 interface Context {
   session: Session | null;
@@ -23,7 +23,7 @@ export const publicProcedure = t.procedure;
  */
 export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
   if (!ctx.session) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+    throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
 
   return next({

@@ -1,4 +1,4 @@
-import { sql } from "drizzle-orm";
+import { sql } from 'drizzle-orm';
 import {
   boolean,
   foreignKey,
@@ -6,18 +6,18 @@ import {
   text,
   timestamp,
   unique,
-} from "drizzle-orm/pg-core";
+} from 'drizzle-orm/pg-core';
 
 export const session = pgTable(
-  "session",
+  'session',
   {
     id: text().primaryKey().notNull(),
-    expiresAt: timestamp({ mode: "string" }).notNull(),
+    expiresAt: timestamp({ mode: 'string' }).notNull(),
     token: text().notNull(),
-    createdAt: timestamp({ mode: "string" })
+    createdAt: timestamp({ mode: 'string' })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp({ mode: "string" }).notNull(),
+    updatedAt: timestamp({ mode: 'string' }).notNull(),
     ipAddress: text(),
     userAgent: text(),
     userId: text().notNull(),
@@ -26,14 +26,14 @@ export const session = pgTable(
     foreignKey({
       columns: [table.userId],
       foreignColumns: [user.id],
-      name: "session_userId_fkey",
-    }).onDelete("cascade"),
-    unique("session_token_key").on(table.token),
-  ]
+      name: 'session_userId_fkey',
+    }).onDelete('cascade'),
+    unique('session_token_key').on(table.token),
+  ],
 );
 
 export const account = pgTable(
-  "account",
+  'account',
   {
     id: text().primaryKey().notNull(),
     accountId: text().notNull(),
@@ -42,53 +42,53 @@ export const account = pgTable(
     accessToken: text(),
     refreshToken: text(),
     idToken: text(),
-    accessTokenExpiresAt: timestamp({ mode: "string" }),
-    refreshTokenExpiresAt: timestamp({ mode: "string" }),
+    accessTokenExpiresAt: timestamp({ mode: 'string' }),
+    refreshTokenExpiresAt: timestamp({ mode: 'string' }),
     scope: text(),
     password: text(),
-    createdAt: timestamp({ mode: "string" })
+    createdAt: timestamp({ mode: 'string' })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp({ mode: "string" }).notNull(),
+    updatedAt: timestamp({ mode: 'string' }).notNull(),
   },
   (table) => [
     foreignKey({
       columns: [table.userId],
       foreignColumns: [user.id],
-      name: "account_userId_fkey",
-    }).onDelete("cascade"),
-  ]
+      name: 'account_userId_fkey',
+    }).onDelete('cascade'),
+  ],
 );
 
-export const verification = pgTable("verification", {
+export const verification = pgTable('verification', {
   id: text().primaryKey().notNull(),
   identifier: text().notNull(),
   value: text().notNull(),
-  expiresAt: timestamp({ mode: "string" }).notNull(),
-  createdAt: timestamp({ mode: "string" })
+  expiresAt: timestamp({ mode: 'string' }).notNull(),
+  createdAt: timestamp({ mode: 'string' })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  updatedAt: timestamp({ mode: "string" })
+  updatedAt: timestamp({ mode: 'string' })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
 });
 
 export const user = pgTable(
-  "user",
+  'user',
   {
     id: text().primaryKey().notNull(),
     name: text().notNull(),
     email: text().notNull(),
     emailVerified: boolean().notNull(),
     image: text(),
-    createdAt: timestamp({ mode: "string" })
+    createdAt: timestamp({ mode: 'string' })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp({ mode: "string" })
+    updatedAt: timestamp({ mode: 'string' })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
   },
-  (table) => [unique("user_email_key").on(table.email)]
+  (table) => [unique('user_email_key').on(table.email)],
 );
 
 export const schema = { session, account, verification, user };
