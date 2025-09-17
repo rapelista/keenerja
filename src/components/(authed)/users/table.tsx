@@ -1,21 +1,11 @@
 'use client';
 
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { trpc } from '~/lib/trpc';
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '~/components/ui/table';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
-import { Skeleton } from '~/components/ui/skeleton';
-import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
+import { Input } from '~/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -23,7 +13,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/ui/select';
-import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import { Skeleton } from '~/components/ui/skeleton';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '~/components/ui/table';
+import { trpc } from '~/lib/trpc';
 
 interface UsersTableProps {
   className?: string;
@@ -39,13 +38,18 @@ export function UsersTable({ className }: UsersTableProps) {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
   const { data, isLoading, error } = useQuery(
-    trpc.users.list.queryOptions({
-      page,
-      limit,
-      search: search || undefined,
-      emailVerified,
-      sortOrder,
-    }),
+    trpc.users.list.queryOptions(
+      {
+        page,
+        limit,
+        search: search || undefined,
+        emailVerified,
+        sortOrder,
+      },
+      {
+        placeholderData: keepPreviousData,
+      },
+    ),
   );
 
   if (error) {
@@ -134,9 +138,6 @@ export function UsersTable({ className }: UsersTableProps) {
         </div>
       ) : (
         <Table>
-          <TableCaption>
-            Showing {data.data.length} of {data.pagination?.total || 0} users
-          </TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>User</TableHead>
@@ -262,7 +263,6 @@ export function UsersTable({ className }: UsersTableProps) {
 function UsersTableSkeleton() {
   return (
     <Table>
-      <TableCaption>Loading users...</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead>User</TableHead>

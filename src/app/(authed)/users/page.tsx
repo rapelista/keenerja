@@ -1,19 +1,17 @@
-'use client';
-
-import { useState } from 'react';
-import { CreateUserModal } from '~/components/(authed)/users/create-modal';
+import { Metadata } from 'next';
+import { UserCreate } from '~/components/(authed)/users/create';
 import { UsersTable } from '~/components/(authed)/users/table';
-import { AlertDialog, AlertDialogTrigger } from '~/components/ui/alert-dialog';
 import { Button } from '~/components/ui/button';
 import { Skeleton } from '~/components/ui/skeleton';
 
-export default function Page() {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+export const metadata: Metadata = {
+  title: 'User Management',
+};
 
+export default function Page() {
   return (
-    <div className="space-y-6">
-      <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        {/* Header */}
+    <>
+      <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold">Users Management</h1>
@@ -21,11 +19,12 @@ export default function Page() {
               Manage and view all users in the system
             </p>
           </div>
-          <AlertDialogTrigger asChild>
-            <Button variant={'default'}>Add New User</Button>
-          </AlertDialogTrigger>
+
+          <UserCreate>
+            <Button variant="default">Add New User</Button>
+          </UserCreate>
         </div>
-        {/* Stats Cards */}
+
         <div className="grid auto-rows-min gap-4 md:grid-cols-3">
           <div className="bg-card border rounded-xl p-6">
             <div className="flex items-center justify-between space-y-0 pb-2">
@@ -45,12 +44,8 @@ export default function Page() {
                 <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
               </svg>
             </div>
-            {/* <div className="text-2xl font-bold">2,543</div> */}
             <Skeleton className="h-8 w-20" />
             <Skeleton className="h-2 w-10 inline-block" />
-            {/* <p className="text-xs text-muted-foreground">
-              +20.1% from last month
-            </p> */}
           </div>
 
           <div className="bg-card border rounded-xl p-6">
@@ -71,12 +66,8 @@ export default function Page() {
                 <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3" />
               </svg>
             </div>
-            {/* <div className="text-2xl font-bold">1,982</div> */}
             <Skeleton className="h-8 w-20" />
             <Skeleton className="h-2 w-10 inline-block" />
-            {/* <p className="text-xs text-muted-foreground">
-              +15% from last month
-            </p> */}
           </div>
 
           <div className="bg-card border rounded-xl p-6">
@@ -99,27 +90,13 @@ export default function Page() {
               </svg>
             </div>
             <Skeleton className="h-8 w-20" />
-            {/* <div className="text-2xl font-bold">573</div> */}
             <Skeleton className="h-2 w-10 inline-block" />
-            {/* <p className="text-xs text-muted-foreground">
-            </p> */}
           </div>
         </div>
-        {/* Users Table */}
         <div className="bg-card border rounded-xl p-6">
           <UsersTable />
         </div>
-
-        {/* Create User Modal */}
-        <CreateUserModal
-          className=""
-          onClose={() => setIsDialogOpen(false)}
-          onSuccess={() => {
-            setIsDialogOpen(false);
-            // The table should refetch data automatically via React Query
-          }}
-        />
-      </AlertDialog>
-    </div>
+      </div>
+    </>
   );
 }

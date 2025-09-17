@@ -1,14 +1,19 @@
+'use client';
+
 import { revalidateLogic, useForm } from '@tanstack/react-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AlertCircleIcon, Loader2 } from 'lucide-react';
+import React, { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
 import {
+  AlertDialog,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from '~/components/ui/alert-dialog';
 import { Button } from '~/components/ui/button';
 import { Checkbox } from '~/components/ui/checkbox';
@@ -17,16 +22,10 @@ import { Label } from '~/components/ui/label';
 import { trpc } from '~/lib/trpc';
 import { createUserSchema } from '~/schema/users';
 
-export function CreateUserModal({
-  className,
-  onClose,
-  onSuccess,
-}: {
-  className?: string;
-  onClose?: () => void;
-  onSuccess?: () => void;
-}) {
+export function UserCreate({ children }: React.PropsWithChildren) {
   const queryClient = useQueryClient();
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const { mutate, isPending, isError, error } = useMutation(
     trpc.users.create.mutationOptions(),
@@ -60,16 +59,24 @@ export function CreateUserModal({
 
           form.reset();
 
-          onSuccess?.();
-          onClose?.();
+          setIsOpen(false);
         },
       });
     },
   });
 
   return (
-    <div className={className}>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+
       <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Create User</AlertDialogTitle>
+          <AlertDialogDescription>
+            Add a new user to the system. All fields marked with * are required.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+
         {isError ? (
           <Alert variant="destructive">
             <AlertCircleIcon />
@@ -79,13 +86,6 @@ export function CreateUserModal({
             </AlertDescription>
           </Alert>
         ) : null}
-
-        <AlertDialogHeader>
-          <AlertDialogTitle>Create User</AlertDialogTitle>
-          <AlertDialogDescription>
-            Add a new user to the system. All fields marked with * are required.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
 
         <form
           onSubmit={(e) => {
@@ -185,15 +185,14 @@ export function CreateUserModal({
             )}
           </form.Field>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={onClose} disabled={isPending}>
-              Cancel
-            </AlertDialogCancel>
+            <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+
             <Button type="submit" disabled={isPending}>
               {isPending ? <Loader2 width={16} height={16} /> : 'Create User'}
             </Button>
           </AlertDialogFooter>
         </form>
       </AlertDialogContent>
-    </div>
+    </AlertDialog>
   );
 }
