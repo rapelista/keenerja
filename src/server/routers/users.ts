@@ -1,3 +1,4 @@
+import { createUserSchema } from '~/schema/create-user';
 import { protectedProcedure, createTRPCRouter } from '../procedures';
 import { UserService } from '../services';
 import {
@@ -48,6 +49,13 @@ export const userRouter = createTRPCRouter({
     .input(updateProfileSchema)
     .mutation(async ({ ctx, input }) => {
       return UserService.updateProfile(ctx.session.user.id, input);
+    }),
+
+  // Create new user (protected - admin only)
+  create: protectedProcedure
+    .input(createUserSchema)
+    .mutation(async ({ input }) => {
+      return UserService.createUser(input);
     }),
 
   // Delete user (protected - admin only in future)

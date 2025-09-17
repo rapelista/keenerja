@@ -7,24 +7,24 @@ import { z } from 'zod';
 // User profile update
 export const updateProfileSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100, 'Name is too long'),
-  email: z.string().email('Invalid email format').optional(),
-  image: z.string().url('Invalid image URL').optional(),
+  email: z.email('Invalid email format').optional(),
+  image: z.url('Invalid image URL').optional(),
 });
 
 // User creation (for admin)
 export const createUserSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100, 'Name is too long'),
-  email: z.string().email('Invalid email format'),
-  emailVerified: z.boolean().default(false),
-  image: z.string().url('Invalid image URL').optional(),
+  email: z.email('Invalid email format'),
+  emailVerified: z.boolean(),
+  image: z.string(),
 });
 
-// User filter/search
+// User filter/search`
 export const userFilterSchema = z.object({
   search: z.string().optional(),
   emailVerified: z.boolean().optional(),
-  createdAfter: z.string().datetime().optional(),
-  createdBefore: z.string().datetime().optional(),
+  createdAfter: z.iso.datetime().optional(),
+  createdBefore: z.iso.datetime().optional(),
 });
 
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;

@@ -134,15 +134,16 @@ export class UserService {
       });
     }
 
-    const newUser = await db
-      .insert(user)
-      .values({
-        id: crypto.randomUUID(), // You might want to use a proper ID generator
-        ...input,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      })
-      .returning();
+    // Prepare data with proper handling of empty image string
+    const userData = {
+      id: crypto.randomUUID(), // You might want to use a proper ID generator
+      ...input,
+      image: input.image && input.image.trim() !== '' ? input.image : null,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    const newUser = await db.insert(user).values(userData).returning();
 
     return newUser[0];
   }
