@@ -114,6 +114,7 @@ export function SignInForm({
                   onChange={(e) => field.handleChange(e.target.value)}
                   id="password"
                   type="password"
+                  placeholder="********"
                 />
 
                 {!field.state.meta.isValid && (
