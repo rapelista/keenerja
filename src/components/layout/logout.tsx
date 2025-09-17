@@ -20,6 +20,7 @@ export function Logout() {
 
   const isOpen = useLogoutModal((state) => state.isOpen);
   const closeLogoutModal = useLogoutModal((state) => state.close);
+  const openLogoutModal = useLogoutModal((state) => state.open);
 
   const { mutate, isPending } = useMutation({
     ...authMutations.signOut(),
@@ -29,15 +30,16 @@ export function Logout() {
   });
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={closeLogoutModal}>
+    <AlertDialog
+      open={isOpen}
+      onOpenChange={(open) => (open ? openLogoutModal() : closeLogoutModal())}
+    >
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate
-            velit, in ab delectus nesciunt pariatur animi amet ad architecto
-            tempora est, veniam, fugiat dicta inventore alias officiis corrupti
-            tenetur ipsum!
+            Logging out will end your current session. You will need to sign in
+            again to access your account.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
