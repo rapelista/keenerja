@@ -1,6 +1,6 @@
 'use client';
 
-import { useForm } from '@tanstack/react-form';
+import { revalidateLogic, useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
 import { AlertCircleIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -25,13 +25,25 @@ export function SignInForm({
   );
 
   const form = useForm({
+    /**
+     * Default form values.
+     */
     defaultValues: {
       email: '',
       password: '',
     },
+
+    /**
+     * Validation logic and schema.
+     */
+    validationLogic: revalidateLogic(),
     validators: {
-      onChange: signInEmailPasswordSchema,
+      onDynamic: signInEmailPasswordSchema,
     },
+
+    /**
+     * Handle form submission.
+     */
     onSubmit: ({ value }) => {
       mutate(value, {
         onSuccess: () => {
