@@ -3,7 +3,9 @@
 import { useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
 import { AlertCircleIcon } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
@@ -33,6 +35,7 @@ export function SignInForm({
     onSubmit: ({ value }) => {
       mutate(value, {
         onSuccess: () => {
+          toast.success('Successfully signed in!');
           router.push('/dashboard');
         },
       });
@@ -77,7 +80,6 @@ export function SignInForm({
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   id="email"
-                  type="email"
                   placeholder="your@email.com"
                 />
 
@@ -97,12 +99,13 @@ export function SignInForm({
               <div className="grid gap-1.5">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
-                  <a
+                  <Link
                     href="#"
                     className="ml-auto text-sm underline-offset-4 hover:underline"
+                    tabIndex={-1}
                   >
                     Forgot your password?
-                  </a>
+                  </Link>
                 </div>
 
                 <Input
