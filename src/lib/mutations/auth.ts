@@ -5,13 +5,6 @@ import { SignInEmailPassword } from '~/schema/sign-in';
 import { signIn, signOut } from '../auth/client';
 
 export const authMutations = {
-  signOut: () =>
-    mutationOptions({
-      mutationFn: async () => {
-        await signOut();
-      },
-    }),
-
   signIn: {
     email: () =>
       mutationOptions({
@@ -21,4 +14,11 @@ export const authMutations = {
         },
       }),
   },
+
+  signOut: () =>
+    mutationOptions({
+      mutationFn: async () => {
+        await signOut();
+      },
+    }),
 };
