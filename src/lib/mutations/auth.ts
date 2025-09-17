@@ -1,17 +1,12 @@
 'use client';
 
 import { mutationOptions } from '@tanstack/react-query';
-import { SignInEmailPassword } from '~/schema/sign-in';
-import { signIn, signOut } from '../auth/client';
+import { SignInEmailPassword } from '~/schema/auth/sign-in';
+import { SignUpEmailPassword } from '~/schema/auth/sign-up';
+import { VerificationEmail } from '~/schema/auth/verification';
+import { sendVerificationEmail, signIn, signOut, signUp } from '../auth/client';
 
 export const authMutations = {
-  signOut: () =>
-    mutationOptions({
-      mutationFn: async () => {
-        await signOut();
-      },
-    }),
-
   signIn: {
     email: () =>
       mutationOptions({
@@ -21,4 +16,31 @@ export const authMutations = {
         },
       }),
   },
+
+  signUp: {
+    email: () =>
+      mutationOptions({
+        mutationFn: async (payload: SignUpEmailPassword) => {
+          const { error } = await signUp.email(payload);
+          if (error) throw error;
+        },
+      }),
+  },
+
+  signOut: () =>
+    mutationOptions({
+      mutationFn: async () => {
+        await signOut();
+      },
+    }),
+
+  verification: () =>
+    mutationOptions({
+      mutationFn: async (payload: VerificationEmail) => {
+        await sendVerificationEmail({
+          email: payload.email,
+          callbackURL: '/dashboard',
+        });
+      },
+    }),
 };
