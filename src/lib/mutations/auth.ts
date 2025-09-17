@@ -1,7 +1,8 @@
 'use client';
 
 import { mutationOptions } from '@tanstack/react-query';
-import { signOut } from '../auth/client';
+import { SignInEmailPassword } from '~/schema/sign-in';
+import { signIn, signOut } from '../auth/client';
 
 export const authMutations = {
   signOut: () =>
@@ -10,4 +11,14 @@ export const authMutations = {
         await signOut();
       },
     }),
+
+  signIn: {
+    email: () =>
+      mutationOptions({
+        mutationFn: async (payload: SignInEmailPassword) => {
+          const { error } = await signIn.email(payload);
+          if (error) throw error;
+        },
+      }),
+  },
 };

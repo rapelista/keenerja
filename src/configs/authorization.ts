@@ -1,5 +1,5 @@
 export const authorization = {
-  mustPublic: ['/sign-in', '/sign-up'],
+  mustPublic: ['/sign-in', '/sign-up', '/forgot-password'],
 
   mustPrivate: ['/dashboard'],
 
