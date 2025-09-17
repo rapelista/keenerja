@@ -36,6 +36,7 @@ export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
 
 /**
  * Create context for tRPC
+ * @deprecated Use createTRPCContext from ~/server/context instead
  */
 export async function createTRPCContext(): Promise<Context> {
   const headersList = await headers();
