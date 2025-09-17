@@ -1,5 +1,5 @@
-import FormData from 'form-data'; // form-data v4.0.1
-import Mailgun from 'mailgun.js'; // mailgun.js v11.1.0
+import FormData from 'form-data';
+import Mailgun from 'mailgun.js';
 
 export async function sendEmail({
   to,
@@ -27,8 +27,8 @@ export async function sendEmail({
       text,
     });
 
-    console.log(data); // logs response data
+    console.log(data);
   } catch (error) {
-    console.log(error); //logs any error
+    console.log(error);
   }
 }
