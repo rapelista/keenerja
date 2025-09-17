@@ -1,6 +1,6 @@
 'use client';
 
-import { useForm } from '@tanstack/react-form';
+import { revalidateLogic, useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
 import { AlertCircleIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -25,13 +25,25 @@ export function SignInForm({
   );
 
   const form = useForm({
+    /**
+     * Initial form values.
+     */
     defaultValues: {
       email: '',
       password: '',
     },
+
+    /**
+     * Validation logic and schema.
+     */
+    validationLogic: revalidateLogic(),
     validators: {
-      onChange: signInEmailPasswordSchema,
+      onDynamic: signInEmailPasswordSchema,
     },
+
+    /**
+     * Handle form submission.
+     */
     onSubmit: ({ value }) => {
       mutate(value, {
         onSuccess: () => {
@@ -44,8 +56,8 @@ export function SignInForm({
 
   return (
     <form
-      className={cn('flex flex-col gap-6', className)}
       {...props}
+      className={cn('flex flex-col gap-6', className)}
       onSubmit={(e) => {
         e.preventDefault();
         form.handleSubmit();
