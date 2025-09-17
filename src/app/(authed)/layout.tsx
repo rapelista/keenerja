@@ -1,5 +1,6 @@
 import { AppSidebar } from '~/components/layout/app-sidebar';
 import { Logout } from '~/components/layout/logout';
+import { VerificationStatus } from '~/components/layout/verification/status';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -43,7 +44,11 @@ export default function Layout({ children }: React.PropsWithChildren) {
           </div>
         </header>
 
-        <div className="p-4 pt-0">{children}</div>
+        <div className="p-4 pt-0 space-y-4">
+          <VerificationStatus />
+
+          {children}
+        </div>
       </SidebarInset>
       <Logout />
     </SidebarProvider>
