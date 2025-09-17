@@ -27,10 +27,13 @@ import {
   useSidebar,
 } from '~/components/ui/sidebar';
 import { authQueries } from '~/lib/queries/auth';
+import { useLogoutModal } from '~/stores/logout-modal';
 
 export function NavUser() {
   const { data } = useQuery(authQueries.me());
   const { isMobile } = useSidebar();
+
+  const openLogoutModal = useLogoutModal((state) => state.open);
 
   const user = data?.user;
 
@@ -95,7 +98,7 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive">
+            <DropdownMenuItem variant="destructive" onClick={openLogoutModal}>
               <LogOut />
               Log out
             </DropdownMenuItem>

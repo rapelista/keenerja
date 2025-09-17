@@ -1,4 +1,5 @@
 import { AppSidebar } from '~/components/layout/app-sidebar';
+import { Logout } from '~/components/layout/logout';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -44,6 +45,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
 
         <div className="p-4 pt-0">{children}</div>
       </SidebarInset>
+      <Logout />
     </SidebarProvider>
   );
 }
