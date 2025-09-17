@@ -11,17 +11,17 @@ import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { authMutations } from '~/lib/mutations/auth';
 import { cn } from '~/lib/utils';
-import { signInEmailPasswordSchema } from '~/schema/auth/sign-in';
+import { signUpEmailPasswordSchema } from '~/schema/auth/sign-up';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 
-export function SignInForm({
+export function SignUpForm({
   className,
   ...props
 }: React.ComponentProps<'form'>) {
   const router = useRouter();
 
   const { mutate, isPending, isError, error } = useMutation(
-    authMutations.signIn.email(),
+    authMutations.signUp.email(),
   );
 
   const form = useForm({
@@ -29,6 +29,7 @@ export function SignInForm({
      * Default form values.
      */
     defaultValues: {
+      name: '',
       email: '',
       password: '',
     },
@@ -38,7 +39,7 @@ export function SignInForm({
      */
     validationLogic: revalidateLogic(),
     validators: {
-      onDynamic: signInEmailPasswordSchema,
+      onDynamic: signUpEmailPasswordSchema,
     },
 
     /**
@@ -47,7 +48,7 @@ export function SignInForm({
     onSubmit: ({ value }) => {
       mutate(value, {
         onSuccess: () => {
-          toast.success('Successfully signed in!');
+          toast.success('Successfully signed up!');
           router.push('/dashboard');
         },
       });
@@ -74,13 +75,37 @@ export function SignInForm({
       ) : null}
 
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold">Sign in to your account</h1>
+        <h1 className="text-2xl font-bold">Create your account</h1>
         <p className="text-muted-foreground text-sm text-balance">
-          Enter your email below to sign in to your account
+          Enter your details below to create your account
         </p>
       </div>
 
       <div className="grid gap-6">
+        <form.Field name="name">
+          {(field) => {
+            return (
+              <div className="grid gap-1.5">
+                <Label htmlFor="name">Name</Label>
+
+                <Input
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  id="name"
+                  placeholder="Your Name"
+                />
+
+                {!field.state.meta.isValid && (
+                  <p role="alert" className="px-1 text-xs text-red-600">
+                    {field.state.meta.errors.map((e) => e?.message)}
+                  </p>
+                )}
+              </div>
+            );
+          }}
+        </form.Field>
+
         <form.Field name="email">
           {(field) => {
             return (
@@ -109,16 +134,7 @@ export function SignInForm({
           {(field) => {
             return (
               <div className="grid gap-1.5">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                  <Link
-                    href="/forgot-password"
-                    className="ml-auto text-sm underline-offset-4 hover:underline"
-                    tabIndex={-1}
-                  >
-                    Forgot your password?
-                  </Link>
-                </div>
+                <Label htmlFor="password">Password</Label>
 
                 <Input
                   value={field.state.value}
@@ -140,7 +156,7 @@ export function SignInForm({
         </form.Field>
 
         <Button type="submit" className="w-full" disabled={isPending}>
-          Sign In
+          Sign Up
         </Button>
 
         <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
@@ -161,9 +177,9 @@ export function SignInForm({
       </div>
 
       <div className="text-center text-sm">
-        Don&apos;t have an account?{' '}
-        <Link href="/sign-up" className="underline underline-offset-4">
-          Sign up
+        Already have an account?{' '}
+        <Link href="/sign-in" className="underline underline-offset-4">
+          Sign in
         </Link>
       </div>
     </form>
