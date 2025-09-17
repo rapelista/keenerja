@@ -1,13 +1,13 @@
 import { TRPCError } from '@trpc/server';
-import { eq, like, and, desc, asc } from 'drizzle-orm';
+import { and, asc, count, desc, eq, ilike } from 'drizzle-orm';
 import { db } from '~/db/drizzle';
-import { user } from '~/db/schema';
+import { user } from '~/db/schemas';
+import { CreateUserInput } from '~/schema/users';
 import type {
-  UpdateProfileInput,
-  CreateUserInput,
-  UserFilterInput,
   PaginationInput,
   SearchInput,
+  UpdateProfileInput,
+  UserFilterInput,
 } from '../validators';
 
 /**
@@ -34,7 +34,7 @@ export class UserService {
     const conditions = [];
 
     if (search) {
-      conditions.push(like(user.name, `%${search}%`));
+      conditions.push(ilike(user.name, `%${search}%`));
     }
 
     if (typeof emailVerified === 'boolean') {
@@ -55,12 +55,20 @@ export class UserService {
       .limit(limit)
       .offset(offset);
 
+    // Get total count for pagination
+    const totalResult = await db
+      .select({ count: count() })
+      .from(user)
+      .where(whereClause);
+
+    const total = totalResult[0]?.count || 0;
+
     return {
       data: users,
       pagination: {
         page,
         limit,
-        total: users.length, // You might want to run a separate count query
+        total,
       },
     };
   }
@@ -126,15 +134,16 @@ export class UserService {
       });
     }
 
-    const newUser = await db
-      .insert(user)
-      .values({
-        id: crypto.randomUUID(), // You might want to use a proper ID generator
-        ...input,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      })
-      .returning();
+    // Prepare data with proper handling of empty image string
+    const userData = {
+      id: crypto.randomUUID(), // You might want to use a proper ID generator
+      ...input,
+      image: input.image && input.image.trim() !== '' ? input.image : null,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    const newUser = await db.insert(user).values(userData).returning();
 
     return newUser[0];
   }
