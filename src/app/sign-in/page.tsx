@@ -7,7 +7,7 @@ import { useState } from 'react';
 import Threads from '~/components/ui/Threads';
 
 export default function Page() {
-  const [activeTab, setActiveTab] = useState<'signup' | 'signin'>('signup');
+  const [activeTab, setActiveTab] = useState<'signup' | 'signin'>('signin');
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-black">
@@ -20,25 +20,25 @@ export default function Page() {
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-md relative">
           {/* Glassmorphic Card */}
-          <div className="backdrop-blur-sm bg-black/5 border border-white/10 rounded-3xl p-8 shadow-2xl">
+          <div className="backdrop-blur-sm bg-white/10 border border-white/10 rounded-3xl p-8 shadow-2xl">
             {/* Tab Switcher */}
-            <div className="flex bg-gray-800/50 rounded-2xl p-1 mb-8">
+            <div className="flex bg-black rounded-2xl p-1 mb-8">
               <button
                 onClick={() => setActiveTab('signup')}
-                className={`flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 ${
+                className={`flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200  ${
                   activeTab === 'signup'
-                    ? 'bg-gray-700/80 text-white shadow-lg'
-                    : 'text-gray-400 hover:text-white'
+                    ? 'backdrop-blur-sm bg-white/10  text-white shadow-lg'
+                    : 'bg-transparent border-transparent text-gray-400 hover:text-white hover:bg-gray-800/50'
                 }`}
               >
                 Sign up
               </button>
               <button
                 onClick={() => setActiveTab('signin')}
-                className={`flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 ${
+                className={`flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 border ${
                   activeTab === 'signin'
-                    ? 'bg-gray-700/80 text-white shadow-lg'
-                    : 'text-gray-400 hover:text-white'
+                    ? 'bg-gray-800 border-gray-600 text-white shadow-lg'
+                    : 'bg-transparent border-transparent text-gray-400 hover:text-white hover:bg-gray-800/50'
                 }`}
               >
                 Sign in
@@ -86,7 +86,7 @@ export default function Page() {
                     </div>
                     <Input
                       placeholder="Enter your email"
-                      className="h-14 pl-12 bg-gray-900/80 border-gray-700/60 text-white placeholder:text-gray-500 focus:border-gray-600 focus:bg-gray-900/90 rounded-xl"
+                      className="h-14 pl-12 bg-gray-900/80  text-white placeholder:text-gray-500  rounded-xl"
                     />
                   </div>
 
