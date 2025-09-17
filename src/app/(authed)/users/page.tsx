@@ -1,4 +1,5 @@
 import { UsersTable } from '~/components/(authed)/users/table';
+import { Button } from '~/components/ui/button';
 import { Skeleton } from '~/components/ui/skeleton';
 
 export default function Page() {
@@ -12,6 +13,7 @@ export default function Page() {
             Manage and view all users in the system
           </p>
         </div>
+        <Button variant={'default'}>Add New User</Button>
       </div>
 
       {/* Stats Cards */}

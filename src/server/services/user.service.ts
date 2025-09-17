@@ -1,7 +1,6 @@
 import { TRPCError } from '@trpc/server';
-import { eq, like, and, desc, asc, count } from 'drizzle-orm';
+import { eq, and, desc, asc, count, ilike } from 'drizzle-orm';
 import { db } from '~/db/drizzle';
-import { user } from '~/db/schema';
 import type {
   UpdateProfileInput,
   CreateUserInput,
@@ -9,6 +8,7 @@ import type {
   PaginationInput,
   SearchInput,
 } from '../validators';
+import { user } from '~/db/schemas';
 
 /**
  * User service - handles all user-related business logic
@@ -34,7 +34,7 @@ export class UserService {
     const conditions = [];
 
     if (search) {
-      conditions.push(like(user.name, `%${search}%`));
+      conditions.push(ilike(user.name, `%${search}%`));
     }
 
     if (typeof emailVerified === 'boolean') {
