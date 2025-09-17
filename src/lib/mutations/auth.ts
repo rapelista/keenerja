@@ -16,7 +16,8 @@ export const authMutations = {
     email: () =>
       mutationOptions({
         mutationFn: async (payload: SignInEmailPassword) => {
-          await signIn.email(payload);
+          const { error } = await signIn.email(payload);
+          if (error) throw error;
         },
       }),
   },

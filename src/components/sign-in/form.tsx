@@ -2,6 +2,7 @@
 
 import { useForm } from '@tanstack/react-form';
 import { useMutation } from '@tanstack/react-query';
+import { AlertCircleIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
@@ -9,6 +10,7 @@ import { Label } from '~/components/ui/label';
 import { authMutations } from '~/lib/mutations/auth';
 import { cn } from '~/lib/utils';
 import { signInEmailPasswordSchema } from '~/schema/sign-in';
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 
 export function SignInForm({
   className,
@@ -16,7 +18,9 @@ export function SignInForm({
 }: React.ComponentProps<'form'>) {
   const router = useRouter();
 
-  const { mutate, isPending } = useMutation(authMutations.signIn.email());
+  const { mutate, isPending, isError, error } = useMutation(
+    authMutations.signIn.email(),
+  );
 
   const form = useForm({
     defaultValues: {
@@ -44,6 +48,16 @@ export function SignInForm({
         form.handleSubmit();
       }}
     >
+      {isError ? (
+        <Alert variant="destructive">
+          <AlertCircleIcon />
+          <AlertTitle>Unable to sign in</AlertTitle>
+          <AlertDescription>
+            <p>{error?.message}</p>
+          </AlertDescription>
+        </Alert>
+      ) : null}
+
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-bold">Sign in to your account</h1>
         <p className="text-muted-foreground text-sm text-balance">
