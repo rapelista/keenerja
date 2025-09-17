@@ -1,11 +1,5 @@
-import { initTRPC } from '@trpc/server';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
-import { createTRPCContext } from '~/configs/trpc';
-import { appRouter } from '~/server/router';
-
-const t = initTRPC.create();
-
-export const router = t.router;
+import { appRouter, createTRPCContext } from '~/server';
 
 function handler(req: Request) {
   return fetchRequestHandler({

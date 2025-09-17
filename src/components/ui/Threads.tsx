@@ -153,13 +153,17 @@ const Threads: React.FC<ThreadsProps> = ({
       uniforms: {
         iTime: { value: 0 },
         iResolution: {
-          value: new Color(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height)
+          value: new Color(
+            gl.canvas.width,
+            gl.canvas.height,
+            gl.canvas.width / gl.canvas.height,
+          ),
         },
         uColor: { value: new Color(...color) },
         uAmplitude: { value: amplitude },
         uDistance: { value: distance },
-        uMouse: { value: new Float32Array([0.5, 0.5]) }
-      }
+        uMouse: { value: new Float32Array([0.5, 0.5]) },
+      },
     });
 
     const mesh = new Mesh(gl, { geometry, program });
@@ -174,7 +178,7 @@ const Threads: React.FC<ThreadsProps> = ({
     window.addEventListener('resize', resize);
     resize();
 
-    let currentMouse = [0.5, 0.5];
+    const currentMouse = [0.5, 0.5];
     let targetMouse = [0.5, 0.5];
 
     function handleMouseMove(e: MouseEvent) {
@@ -210,7 +214,8 @@ const Threads: React.FC<ThreadsProps> = ({
     animationFrameId.current = requestAnimationFrame(update);
 
     return () => {
-      if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
+      if (animationFrameId.current)
+        cancelAnimationFrame(animationFrameId.current);
       window.removeEventListener('resize', resize);
 
       if (enableMouseInteraction) {
@@ -222,7 +227,9 @@ const Threads: React.FC<ThreadsProps> = ({
     };
   }, [color, amplitude, distance, enableMouseInteraction]);
 
-  return <div ref={containerRef} className="w-full h-full relative" {...rest} />;
+  return (
+    <div ref={containerRef} className="w-full h-full relative" {...rest} />
+  );
 };
 
 export default Threads;
