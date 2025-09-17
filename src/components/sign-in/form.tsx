@@ -100,7 +100,7 @@ export function SignInForm({
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                   <Link
-                    href="#"
+                    href="/forgot-password"
                     className="ml-auto text-sm underline-offset-4 hover:underline"
                     tabIndex={-1}
                   >
@@ -150,9 +150,9 @@ export function SignInForm({
 
       <div className="text-center text-sm">
         Don&apos;t have an account?{' '}
-        <a href="#" className="underline underline-offset-4">
+        <Link href="/sign-up" className="underline underline-offset-4">
           Sign up
-        </a>
+        </Link>
       </div>
     </form>
   );
