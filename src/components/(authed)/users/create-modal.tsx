@@ -11,10 +11,11 @@ import {
   AlertDialogTitle,
 } from '~/components/ui/alert-dialog';
 import { Button } from '~/components/ui/button';
+import { Checkbox } from '~/components/ui/checkbox';
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { trpc } from '~/lib/trpc';
-import { createUserSchema } from '~/server/validators';
+import { createUserSchema } from '~/schema/users';
 
 export function CreateUserModal({
   className,
@@ -85,6 +86,7 @@ export function CreateUserModal({
             Add a new user to the system. All fields marked with * are required.
           </AlertDialogDescription>
         </AlertDialogHeader>
+
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -92,10 +94,12 @@ export function CreateUserModal({
           }}
           className="space-y-4"
         >
-          {
-            // Debug: Show form state
-            <pre>{JSON.stringify(form.state.values, null, 2)}</pre>
-          }
+          {process.env.NODE_ENV === 'development' ? (
+            <form.Subscribe>
+              {({ values }) => <pre>{JSON.stringify(values, null, 2)}</pre>}
+            </form.Subscribe>
+          ) : null}
+
           <form.Field name="name">
             {(field) => (
               <div className="space-y-2">
@@ -120,25 +124,20 @@ export function CreateUserModal({
             )}
           </form.Field>
 
-          <form.Field
-            name="email"
-            validators={{
-              onChange: createUserSchema.shape.email,
-            }}
-          >
+          <form.Field name="email">
             {(field) => (
               <div className="space-y-2">
                 <Label htmlFor={field.name}>Email *</Label>
                 <Input
-                  id={field.name}
+                  id="email"
                   name={field.name}
-                  type="email"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="Enter user's email address"
                   aria-invalid={field.state.meta.errors.length > 0}
                 />
+
                 {field.state.meta.errors.length > 0 && (
                   <p className="text-sm text-red-500">
                     {field.state.meta.errors.map((e) => e?.message).join(', ')}
@@ -153,15 +152,19 @@ export function CreateUserModal({
               <div className="space-y-2">
                 <Label htmlFor={field.name}>Profile Image URL (Optional)</Label>
                 <Input
-                  id={field.name}
+                  id="image"
                   name={field.name}
-                  type="url"
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   placeholder="https://example.com/image.jpg"
                   aria-invalid={field.state.meta.errors.length > 0}
                 />
+                {field.state.meta.errors.length > 0 && (
+                  <p className="text-sm text-red-500">
+                    {field.state.meta.errors.map((e) => e?.message).join(', ')}
+                  </p>
+                )}
               </div>
             )}
           </form.Field>
@@ -169,16 +172,15 @@ export function CreateUserModal({
           <form.Field name="emailVerified">
             {(field) => (
               <div className="flex items-center space-x-2">
-                <Input
-                  id={field.name}
+                <Checkbox
+                  id="email-verified"
                   name={field.name}
-                  type="checkbox"
                   onBlur={field.handleBlur}
                   checked={field.state.value}
-                  onChange={(e) => field.handleChange(e.target.checked)}
-                  className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  onCheckedChange={(e) => field.handleChange(!!e)}
                 />
-                <Label htmlFor={field.name}>Email verified</Label>
+
+                <Label htmlFor="email-verified">Email verified</Label>
               </div>
             )}
           </form.Field>

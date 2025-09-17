@@ -1,14 +1,14 @@
 import { TRPCError } from '@trpc/server';
-import { eq, and, desc, asc, count, ilike } from 'drizzle-orm';
+import { and, asc, count, desc, eq, ilike } from 'drizzle-orm';
 import { db } from '~/db/drizzle';
+import { user } from '~/db/schemas';
+import { CreateUserInput } from '~/schema/users';
 import type {
-  UpdateProfileInput,
-  CreateUserInput,
-  UserFilterInput,
   PaginationInput,
   SearchInput,
+  UpdateProfileInput,
+  UserFilterInput,
 } from '../validators';
-import { user } from '~/db/schemas';
 
 /**
  * User service - handles all user-related business logic

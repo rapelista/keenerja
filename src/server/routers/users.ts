@@ -1,13 +1,13 @@
-import { createUserSchema } from '~/schema/create-user';
-import { protectedProcedure, createTRPCRouter } from '../procedures';
+import { z } from 'zod';
+import { createUserSchema } from '~/schema/users';
+import { createTRPCRouter, protectedProcedure } from '../procedures';
 import { UserService } from '../services';
 import {
-  updateProfileSchema,
   paginationSchema,
-  userFilterSchema,
   searchSchema,
+  updateProfileSchema,
+  userFilterSchema,
 } from '../validators';
-import { z } from 'zod';
 
 /**
  * User router - handles all user-related procedures
@@ -51,7 +51,6 @@ export const userRouter = createTRPCRouter({
       return UserService.updateProfile(ctx.session.user.id, input);
     }),
 
-  // Create new user (protected - admin only)
   create: protectedProcedure
     .input(createUserSchema)
     .mutation(async ({ input }) => {
