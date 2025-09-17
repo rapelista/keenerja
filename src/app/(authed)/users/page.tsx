@@ -93,9 +93,9 @@ export default function Page() {
             <Skeleton className="h-2 w-10 inline-block" />
           </div>
         </div>
-        <div className="bg-card border rounded-xl p-6">
-          <UsersTable />
-        </div>
+
+        <UsersTable />
+        {/* <div className="bg-card border rounded-xl p-6"></div> */}
       </div>
     </>
   );
