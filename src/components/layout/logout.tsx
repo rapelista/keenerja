@@ -25,6 +25,7 @@ export function Logout() {
   const { mutate, isPending } = useMutation({
     ...authMutations.signOut(),
     onSuccess: () => {
+      closeLogoutModal();
       router.push('/sign-in');
     },
   });
